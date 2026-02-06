@@ -1,0 +1,8 @@
+{
+  "name": "Claude Code Terminal",
+  "render_readme": true,
+  "content_in_root": false,
+  "domains": ["panel_custom"],
+  "homeassistant": "2023.9.0",
+  "iot_class": "local_push"
+}

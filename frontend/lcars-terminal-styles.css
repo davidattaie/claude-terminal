@@ -1,0 +1,303 @@
+/**
+ * LCARS Terminal Styles for Claude Code Terminal
+ * Star Trek LCARS theme integration
+ */
+
+:root {
+  /* LCARS Color Palette */
+  --lcars-orange: #FF9900;
+  --lcars-gold: #FFAA00;
+  --lcars-blue: #9999FF;
+  --lcars-purple: #CC99CC;
+  --lcars-lilac: #CC99FF;
+  --lcars-red: #CC6666;
+  --lcars-peach: #FF9966;
+  --lcars-black: #000000;
+  --lcars-gray: #333333;
+  --lcars-tan: #FFCC99;
+  --lcars-rust: #CC6633;
+
+  /* Terminal-specific colors */
+  --terminal-bg: var(--lcars-black);
+  --terminal-fg: var(--lcars-orange);
+  --terminal-cursor: var(--lcars-orange);
+  --terminal-selection: rgba(255, 153, 0, 0.3);
+  --terminal-border: var(--lcars-gold);
+}
+
+/* Panel Container */
+.claude-terminal-panel {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+  width: 100%;
+  background-color: var(--lcars-black);
+  font-family: 'Antonio', sans-serif;
+  overflow: hidden;
+}
+
+/* LCARS Header Bar */
+.lcars-header {
+  display: flex;
+  align-items: center;
+  height: 60px;
+  background: linear-gradient(to right,
+    var(--lcars-blue) 0%,
+    var(--lcars-blue) 20px,
+    transparent 20px,
+    transparent 100%
+  );
+  border-bottom: 3px solid var(--lcars-gold);
+  padding: 0 20px;
+}
+
+.lcars-header-cap {
+  width: 120px;
+  height: 100%;
+  background-color: var(--lcars-blue);
+  border-radius: 0 30px 30px 0;
+  margin-right: 20px;
+}
+
+.lcars-header-title {
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--lcars-orange);
+  text-transform: uppercase;
+  letter-spacing: 4px;
+  flex: 1;
+}
+
+.lcars-status-indicator {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 14px;
+  color: var(--lcars-orange);
+}
+
+.lcars-status-dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background-color: var(--lcars-red);
+  transition: background-color 0.3s;
+}
+
+.lcars-status-dot.online {
+  background-color: var(--lcars-peach);
+  box-shadow: 0 0 10px var(--lcars-peach);
+}
+
+/* Terminal Container */
+.terminal-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 20px;
+  overflow: hidden;
+}
+
+/* Terminal Border - LCARS Style */
+.terminal-border {
+  flex: 1;
+  border: 3px solid var(--lcars-orange);
+  border-radius: 12px;
+  padding: 10px;
+  background-color: var(--lcars-black);
+  box-shadow:
+    inset 0 0 20px rgba(255, 153, 0, 0.1),
+    0 0 30px rgba(255, 153, 0, 0.2);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+
+/* xterm.js terminal wrapper */
+.terminal-wrapper {
+  flex: 1;
+  overflow: hidden;
+  background-color: var(--lcars-black);
+  padding: 10px;
+}
+
+/* xterm.js overrides for LCARS theme */
+.xterm {
+  height: 100%;
+  width: 100%;
+  padding: 0;
+}
+
+.xterm-viewport {
+  background-color: var(--terminal-bg) !important;
+  overflow-y: auto;
+}
+
+.xterm-screen {
+  background-color: var(--terminal-bg) !important;
+}
+
+/* Cursor styling */
+.xterm-cursor-layer .xterm-cursor {
+  background-color: var(--terminal-cursor) !important;
+}
+
+.xterm-cursor-layer .xterm-cursor.xterm-cursor-blink {
+  animation: blink 1s linear infinite;
+}
+
+@keyframes blink {
+  0%, 49% {
+    opacity: 1;
+  }
+  50%, 100% {
+    opacity: 0;
+  }
+}
+
+/* Selection styling */
+.xterm-selection {
+  background-color: var(--terminal-selection) !important;
+}
+
+/* Scrollbar styling */
+.xterm-viewport::-webkit-scrollbar {
+  width: 8px;
+  background-color: var(--lcars-gray);
+}
+
+.xterm-viewport::-webkit-scrollbar-thumb {
+  background-color: var(--lcars-orange);
+  border-radius: 4px;
+}
+
+.xterm-viewport::-webkit-scrollbar-thumb:hover {
+  background-color: var(--lcars-gold);
+}
+
+/* LCARS Footer Bar */
+.lcars-footer {
+  display: flex;
+  align-items: center;
+  height: 40px;
+  background: linear-gradient(to right,
+    var(--lcars-purple) 0%,
+    var(--lcars-purple) 15px,
+    transparent 15px,
+    transparent 100%
+  );
+  border-top: 2px solid var(--lcars-tan);
+  padding: 0 20px;
+}
+
+.lcars-footer-cap {
+  width: 80px;
+  height: 100%;
+  background-color: var(--lcars-purple);
+  border-radius: 0 20px 20px 0;
+  margin-right: 15px;
+}
+
+.lcars-footer-text {
+  font-size: 12px;
+  color: var(--lcars-tan);
+  opacity: 0.8;
+}
+
+/* Loading state */
+.terminal-loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--lcars-orange);
+  font-size: 24px;
+  font-weight: bold;
+}
+
+.terminal-loading::after {
+  content: '...';
+  animation: loading 1.5s infinite;
+}
+
+@keyframes loading {
+  0% { content: '.'; }
+  33% { content: '..'; }
+  66% { content: '...'; }
+  100% { content: '.'; }
+}
+
+/* Error state */
+.terminal-error {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  color: var(--lcars-red);
+  font-size: 18px;
+  padding: 20px;
+  text-align: center;
+}
+
+.terminal-error-title {
+  font-size: 24px;
+  font-weight: bold;
+  margin-bottom: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .lcars-header {
+    height: 50px;
+  }
+
+  .lcars-header-title {
+    font-size: 20px;
+    letter-spacing: 2px;
+  }
+
+  .lcars-header-cap {
+    width: 80px;
+  }
+
+  .terminal-container {
+    padding: 10px;
+  }
+
+  .lcars-footer {
+    height: 35px;
+  }
+}
+
+/* LCARS Button Styles (for future controls) */
+.lcars-button {
+  background-color: var(--lcars-orange);
+  color: var(--lcars-black);
+  border: none;
+  border-radius: 20px;
+  padding: 10px 30px;
+  font-family: 'Antonio', sans-serif;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+
+.lcars-button:hover {
+  background-color: var(--lcars-gold);
+  box-shadow: 0 0 15px var(--lcars-gold);
+}
+
+.lcars-button:active {
+  transform: scale(0.95);
+}
+
+/* ANSI color overrides for LCARS palette */
+.xterm-fg-1 { color: var(--lcars-red) !important; }
+.xterm-fg-2 { color: var(--lcars-peach) !important; }
+.xterm-fg-3 { color: var(--lcars-gold) !important; }
+.xterm-fg-4 { color: var(--lcars-blue) !important; }
+.xterm-fg-5 { color: var(--lcars-purple) !important; }
+.xterm-fg-6 { color: var(--lcars-lilac) !important; }
+.xterm-fg-7 { color: var(--lcars-tan) !important; }

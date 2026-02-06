@@ -1,0 +1,11 @@
+{
+  "domain": "claude_code_terminal",
+  "name": "Claude Code Terminal",
+  "documentation": "https://github.com/davidattaie/claude-code-terminal",
+  "dependencies": [],
+  "codeowners": ["@davidattaie"],
+  "requirements": [],
+  "version": "1.0.0",
+  "config_flow": true,
+  "iot_class": "local_push"
+}

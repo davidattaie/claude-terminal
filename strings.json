@@ -1,0 +1,23 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Claude Code Terminal Setup",
+        "description": "Configure Claude Code Terminal integration",
+        "data": {
+          "api_key": "Anthropic API Key",
+          "working_dir": "Working Directory"
+        }
+      }
+    },
+    "error": {
+      "invalid_api_key": "Invalid API key format",
+      "invalid_working_dir": "Invalid or unauthorized working directory",
+      "claude_not_found": "Claude Code CLI not found. Please install Claude Code first.",
+      "auth_failed": "Authentication failed. Please check your API key."
+    },
+    "abort": {
+      "already_configured": "Claude Code Terminal is already configured"
+    }
+  }
+}
