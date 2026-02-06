@@ -1,0 +1,164 @@
+views:
+  - type: sidebar
+    theme: LCARS TNGbuttons
+    path: ''
+    title: Davids Office Command
+    icon: mdi:robot
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: |
+                  # STATUS
+                card_mod:
+                  class: header-left
+              - clock_style: digital
+                clock_size: large
+                show_seconds: false
+                no_background: true
+                type: clock
+                face_style: markers
+                card_mod:
+                  class: middle-left
+              - type: entities
+                entities:
+                  - entity: sensor.date
+                card_mod:
+                  class: middle-left
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: call-service
+                  service: switch.toggle
+                  target:
+                    device_id: dffa08bfb4d0d3f5a1cdc704653250f7
+                name: Toggle Fan
+                icon: mdi:fan
+                card_mod:
+                  class: button-lozenge-left
+              - type: tile
+                entity: binary_sensor.presence_sensor_fp2_4991_presence_sensor_1
+                color: red
+                vertical: false
+                features_position: bottom
+                visibility:
+                  - condition: state
+                    state: 'on'
+                card_mod:
+                  class: middle-left
+              - type: markdown
+                content: |
+                  # LIGHTING
+                card_mod:
+                  class: middle-left
+              - type: horizontal-stack
+                cards:
+                  - type: light
+                    entity: light.h61e6_2
+                    card_mod:
+                      class: button-small
+                  - type: light
+                    entity: light.h61e6
+                    card_mod:
+                      class: button-small
+                card_mod:
+                  class: middle-left
+              - type: gauge
+                entity: sensor.presence_sensor_fp2_4991_light_sensor_light_level
+                needle: false
+                name: Light Levels
+                card_mod:
+                  class: middle-left
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: |
+                  # ENVIRONMENTAL
+                card_mod:
+                  class: header-left
+              - type: gauge
+                entity: sensor.airgradient_855c_carbon_dioxide
+                severity:
+                  green: 500
+                  yellow: 900
+                  red: 1250
+                needle: false
+                name: CO2 Levels
+                card_mod:
+                  class: middle-left
+              - type: entities
+                entities:
+                  - entity: sensor.airgradient_855c_carbon_dioxide
+                    name: CO2
+                  - entity: sensor.airgradient_855c_pm0_3
+                    name: PM 0.3
+                  - entity: sensor.airgradient_855c_pm1
+                    name: PM 1
+                  - entity: sensor.airgradient_855c_pm2_5
+                    name: PM 2.5
+                  - entity: sensor.airgradient_855c_temperature
+                    name: Temperature
+                  - entity: sensor.airgradient_855c_voc_index
+                    name: VOC Index
+                card_mod:
+                  class: middle-left
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: |
+                  # VISUAL SENSORS
+                card_mod:
+                  class: header-left
+              - show_state: true
+                show_name: true
+                camera_view: live
+                fit_mode: cover
+                type: picture-entity
+                entity: camera.g4_doorbell_pro_poe_high_resolution_channel
+                visibility:
+                  - condition: state
+                    entity: input_boolean.do_show_video
+                    state: 'on'
+                card_mod:
+                  class: middle-left
+              - show_state: true
+                show_name: true
+                camera_view: live
+                fit_mode: cover
+                type: picture-entity
+                entity: camera.g6_bullet_high_resolution_channel
+                visibility:
+                  - condition: state
+                    entity: input_boolean.do_show_video
+                    state: 'on'
+                card_mod:
+                  class: middle-left
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: toggle
+                entity: input_boolean.do_show_video
+                name: Toggle Cameras
+                icon: mdi:speaker-multiple
+                card_mod:
+                  class: button-lozenge-left
+                features_position: bottom
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left

@@ -1,0 +1,50 @@
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+
+# Home Assistant
+*.db
+*.db-shm
+*.db-wal
+*.log
+*.sqlite
+.storage/
+deps/
+tts/
+www/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+*~
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Secrets (don't commit credentials!)
+secrets.yaml
+*.pem
+*.key
+*.crt
+
+# Development
+.pytest_cache/
+.coverage
+htmlcov/
+
+# Claude settings (local only)
+.claude/stats-cache.json
+.claude/debug/
+.claude/file-history/
+.claude/session-env/
+.claude/shell-snapshots/
+.claude/todos/
+.claude/tasks/
+.claude/plans/
+.claude/history.jsonl

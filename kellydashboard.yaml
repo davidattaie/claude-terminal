@@ -1,0 +1,188 @@
+views:
+  - type: sidebar
+    theme: Material You
+    path: ''
+    title: Kelly's Office Command
+    icon: mdi:robot
+    cards:
+      - type: horizontal-stack
+        cards:
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: |
+                  # Welcome
+                card_mod:
+                  class: header-left
+              - clock_style: digital
+                clock_size: large
+                show_seconds: false
+                no_background: true
+                type: clock
+                face_style: markers
+                card_mod:
+                  class: middle-left
+              - type: entities
+                entities:
+                  - entity: sensor.date
+                card_mod:
+                  class: middle-left
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left
+              - type: markdown
+                content: |
+                  # Lighting
+                card_mod:
+                  class: header-left
+              - type: horizontal-stack
+                cards:
+                  - type: light
+                    entity: light.ko_upper_lights
+                    card_mod:
+                      class: button-small
+                  - type: light
+                    entity: light.ko_under_lights
+                    card_mod:
+                      class: button-small
+                card_mod:
+                  class: middle-left
+              - type: gauge
+                entity: sensor.presence_sensor_fp2_7c77_light_sensor_light_level
+                needle: false
+                name: Light Levels
+                card_mod:
+                  class: middle-left
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: |
+                  # Air Quality
+                card_mod:
+                  class: header-left
+              - type: gauge
+                entity: sensor.airgradient_44e4_carbon_dioxide
+                severity:
+                  green: 500
+                  yellow: 900
+                  red: 1250
+                needle: false
+                name: CO2 Levels
+                card_mod:
+                  class: middle-left
+              - type: entities
+                entities:
+                  - entity: sensor.airgradient_44e4_carbon_dioxide
+                    name: CO2
+                  - entity: sensor.airgradient_44e4_pm0_3
+                    name: PM 0.3
+                  - entity: sensor.airgradient_44e4_pm1
+                    name: PM 1
+                  - entity: sensor.airgradient_44e4_pm2_5
+                    name: PM 2.5
+                  - entity: sensor.airgradient_44e4_temperature
+                    name: Temperature
+                  - entity: sensor.airgradient_44e4_voc_index
+                    name: VOC Index
+                card_mod:
+                  class: middle-left
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: |
+                  # Flights
+                card_mod:
+                  class: header-left
+              - type: custom:flightradar-flight-card
+                entities:
+                  - entity_id: ''
+                units:
+                  altitude: ft
+                  distance: km
+                  ground_speed: kts
+                show_flightradar_link: true
+                show_airline_info_column: true
+                show_airline_logo: true
+                show_aircraft_photo: true
+                show_progress_bar: true
+                card_mod:
+                  class: middle-left
+              - type: custom:flightradar-flight-card
+                entities:
+                  - entity_id: sensor.flightradar24_additional_tracked
+                    title: Currently in area
+                units:
+                  altitude: ft
+                  distance: km
+                  ground_speed: kts
+                show_flightradar_link: true
+                show_airline_info_column: true
+                show_airline_logo: true
+                show_aircraft_photo: true
+                show_progress_bar: true
+                card_mod:
+                  class: middle-left
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left
+          - type: vertical-stack
+            cards:
+              - type: markdown
+                content: |
+                  # Cameras
+                card_mod:
+                  class: header-left
+              - show_state: true
+                show_name: true
+                camera_view: live
+                fit_mode: cover
+                type: picture-entity
+                entity: camera.g4_doorbell_pro_poe_high_resolution_channel
+                visibility:
+                  - condition: state
+                    entity: input_boolean.ko_show_video
+                    state: 'on'
+                card_mod:
+                  class: middle-left
+              - show_state: true
+                show_name: true
+                camera_view: live
+                fit_mode: cover
+                type: picture-entity
+                entity: camera.g6_bullet_high_resolution_channel
+                visibility:
+                  - condition: state
+                    entity: input_boolean.ko_show_video
+                    state: 'on'
+                card_mod:
+                  class: middle-left
+              - show_name: true
+                show_icon: true
+                type: button
+                tap_action:
+                  action: toggle
+                entity: input_boolean.ko_show_video
+                name: Toggle Cameras
+                icon: mdi:video
+                card_mod:
+                  class: button-lozenge-left
+                features_position: bottom
+              - type: markdown
+                content: |
+                  #
+                card_mod:
+                  class: footer-left
