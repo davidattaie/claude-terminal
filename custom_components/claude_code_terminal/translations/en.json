@@ -1,0 +1,28 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Claude Code Terminal Setup",
+        "description": "Enter your Anthropic API key to enable Claude Code Terminal. This key will be stored securely and used to authenticate Claude Code CLI sessions.",
+        "data": {
+          "api_key": "Anthropic API Key",
+          "working_dir": "Default Working Directory"
+        },
+        "data_description": {
+          "api_key": "Your Anthropic API key (starts with 'sk-ant-'). Get one at https://console.anthropic.com/",
+          "working_dir": "The default directory where Claude Code will operate (must be within allowed directories)"
+        }
+      }
+    },
+    "error": {
+      "invalid_api_key": "The API key format is invalid. It should start with 'sk-ant-'.",
+      "invalid_working_dir": "The working directory is not allowed for security reasons. Choose from: /config, /share, /addon_configs, /homeassistant",
+      "claude_not_found": "Claude Code CLI was not found on the system. Please install it first: npm install -g @anthropic-ai/claude-code",
+      "auth_failed": "Failed to authenticate with the provided API key. Please verify it's correct."
+    },
+    "abort": {
+      "already_configured": "Claude Code Terminal is already configured. Only one instance is allowed."
+    }
+  },
+  "title": "Claude Code Terminal"
+}
