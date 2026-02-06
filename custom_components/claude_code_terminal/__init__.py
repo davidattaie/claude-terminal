@@ -2,11 +2,13 @@
 from __future__ import annotations
 
 import logging
+from pathlib import Path
 
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.core import HomeAssistant
 from homeassistant.exceptions import ConfigEntryNotReady
 
+from .bundled_runtime import BundledRuntime
 from .const import DOMAIN, DEFAULT_MAX_SESSIONS, DEFAULT_SESSION_TIMEOUT
 from .oauth_handler import OAuthHandler
 from .panel import async_register_panel, async_unregister_panel
@@ -26,6 +28,23 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Claude Code Terminal from a config entry."""
     _LOGGER.info("Setting up Claude Code Terminal integration")
 
+    # Get integration path
+    integration_path = Path(__file__).parent
+
+    # Initialize bundled runtime
+    runtime = BundledRuntime(hass, integration_path)
+
+    # Install Node.js and Claude CLI if not already installed
+    if not runtime.is_installed():
+        _LOGGER.info("Bundled runtime not found, installing...")
+        try:
+            await runtime.install()
+        except Exception as err:  # pylint: disable=broad-except
+            _LOGGER.error("Failed to install bundled runtime: %s", err)
+            raise ConfigEntryNotReady from err
+    else:
+        _LOGGER.info("Bundled runtime already installed")
+
     # Initialize OAuth handler and load tokens
     oauth_handler = OAuthHandler(
         hass,
@@ -41,17 +60,19 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         _LOGGER.error("Failed to get valid access token: %s", err)
         raise ConfigEntryNotReady from err
 
-    # Initialize terminal manager
+    # Initialize terminal manager with bundled runtime
     manager = ClaudeTerminalManager(
         hass,
+        runtime=runtime,
         max_sessions=DEFAULT_MAX_SESSIONS,
         session_timeout=DEFAULT_SESSION_TIMEOUT,
     )
     await manager.start()
 
-    # Store manager and oauth handler in hass.data
+    # Store manager, runtime, and oauth handler in hass.data
     hass.data[DOMAIN] = {
         "manager": manager,
+        "runtime": runtime,
         "oauth_handler": oauth_handler,
         "entry": entry,
     }

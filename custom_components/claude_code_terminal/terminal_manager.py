@@ -15,6 +15,7 @@ from typing import Any, Callable
 from homeassistant.core import HomeAssistant
 from homeassistant.helpers import event
 
+from .bundled_runtime import BundledRuntime
 from .const import (
     DEFAULT_MAX_SESSIONS,
     DEFAULT_SESSION_TIMEOUT,
@@ -34,11 +35,13 @@ class ClaudeTerminalSession:
         session_id: str,
         working_dir: str,
         output_callback: Callable[[str, bytes], None],
+        runtime: BundledRuntime,
     ) -> None:
         """Initialize terminal session."""
         self.session_id = session_id
         self.working_dir = working_dir
         self.output_callback = output_callback
+        self.runtime = runtime
         self.master_fd: int | None = None
         self.pid: int | None = None
         self.last_activity = time.time()
@@ -77,7 +80,7 @@ class ClaudeTerminalSession:
 
             if self.pid == 0:
                 # Child process - execute Claude Code
-                env = os.environ.copy()
+                env = self.runtime.get_env()
 
                 # Set authentication token if provided
                 if auth_token:
@@ -98,8 +101,9 @@ class ClaudeTerminalSession:
                 # Change to working directory
                 os.chdir(self.working_dir)
 
-                # Execute Claude Code CLI
-                os.execvpe("claude", ["claude"], env)
+                # Execute Claude Code CLI using bundled runtime
+                claude_cmd = self.runtime.get_claude_command()
+                os.execvpe(claude_cmd[0], claude_cmd, env)
 
             # Parent process - set up non-blocking I/O
             flags = fcntl.fcntl(self.master_fd, fcntl.F_GETFL)
@@ -228,11 +232,13 @@ class ClaudeTerminalManager:
     def __init__(
         self,
         hass: HomeAssistant,
+        runtime: BundledRuntime,
         max_sessions: int = DEFAULT_MAX_SESSIONS,
         session_timeout: int = DEFAULT_SESSION_TIMEOUT,
     ) -> None:
         """Initialize terminal manager."""
         self.hass = hass
+        self.runtime = runtime
         self.max_sessions = max_sessions
         self.session_timeout = session_timeout
         self.sessions: dict[str, ClaudeTerminalSession] = {}
@@ -282,6 +288,7 @@ class ClaudeTerminalManager:
             session_id=session_id,
             working_dir=working_dir,
             output_callback=output_callback,
+            runtime=self.runtime,
         )
 
         try:

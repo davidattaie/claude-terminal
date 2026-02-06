@@ -48,3 +48,6 @@ htmlcov/
 .claude/tasks/
 .claude/plans/
 .claude/history.jsonl
+
+# Bundled runtime (downloaded at runtime)
+custom_components/claude_code_terminal/runtime/
